@@ -36,6 +36,9 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        .visit-count {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -44,9 +47,20 @@
         <input type="text" id="urlInput" placeholder="กรอกลิ้งเว็บไซต์">
         <button onclick="checkWebsiteStatus()">เช็คสถานะ</button>
         <div id="result" class="result"></div>
+        <div id="visitCount" class="visit-count"></div>
     </div>
 
     <script>
+        function updateVisitCount() {
+            let visitCount = localStorage.getItem('visitCount');
+            if (!visitCount) {
+                visitCount = 0;
+            }
+            visitCount = parseInt(visitCount) + 1;
+            localStorage.setItem('visitCount', visitCount);
+            document.getElementById('visitCount').textContent = `จำนวนการเข้าชม: ${visitCount}`;
+        }
+
         async function checkWebsiteStatus() {
             const urlInput = document.getElementById('urlInput').value;
             const resultDiv = document.getElementById('result');
@@ -78,6 +92,9 @@
                 resultDiv.style.color = "red";
             }
         }
+
+        // Update visit count on page load
+        updateVisitCount();
     </script>
 </body>
 </html>
